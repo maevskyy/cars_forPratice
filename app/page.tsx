@@ -3,7 +3,19 @@ import { fuels, yearsOfProduction } from '@/constants';
 
 import fetchCars from '@/utils';
 
-const Home = async ({ searchParams }) => {
+type Props = {
+	searchParams: FilterProps;
+}
+
+type FilterProps =  {
+	manufacturer?: string;
+	year?: number;
+	model?: string;
+	limit?: number;
+	fuel?: string;
+  }
+
+const Home = async ({ searchParams }: Props) => {
 	const allCars = await fetchCars({
 		manufacturer: searchParams.manufacturer || '',
 		year: searchParams.year || 2022,
@@ -50,7 +62,7 @@ const Home = async ({ searchParams }) => {
 						</div>
 
 						<ShowMore
-							pageNumber={(searchParams.pageNumber || 10) / 10}
+							pageNumber={(searchParams.limit  || 10) / 10}
 							isNext={(searchParams.limit || 10) > allCars.length}
 						/>
 					</section>
